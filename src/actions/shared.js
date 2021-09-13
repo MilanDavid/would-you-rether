@@ -4,7 +4,7 @@ import { receiveQuestions } from './tweets';
 import { setAuthedUser } from './authedUser';
 import { showLoading, hideLoading } from 'react-redux-loading';
 
-const AUTHED_ID = 'tylermcginnis';
+const AUTHED_ID = null;
 
 export function handleInitialData() {
     return (dispatch) => {
@@ -14,7 +14,7 @@ export function handleInitialData() {
         .then(({ users, questions}) => {
             dispatch(receiveUsers(users));
             dispatch(receiveQuestions(questions));
-            dispatch(setAuthedUser(AUTHED_ID));
+            if(AUTHED_ID) dispatch(setAuthedUser(users[AUTHED_ID]));
             dispatch(hideLoading());
         })
     }

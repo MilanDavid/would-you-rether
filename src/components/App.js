@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import Dashboard from './Dashboard';
@@ -7,40 +7,45 @@ import LoadingBar from 'react-redux-loading';
 import NewTweet from './NewTweet';
 import TweetPage from './TweetPage';
 import Nav from './Nav';
+import Login from './Login';
+import { logoutUser } from '../actions/authedUser';
 
-class App extends Component {
+const App = ({ authedUser, dispatch }) => {
 
-  componentDidMount() {
-    this.props.dispatch(handleInitialData());
+  useEffect(() => {
+    dispatch(handleInitialData());
+  }, []);
+
+  const handleLogoutUser = () => {
+    dispatch(logoutUser());
   }
 
-  render() {
-    return (
-      <Router>
-        <Fragment>
-          <LoadingBar />
-          <div className='container'>
-            <Nav userData={this.props.authedUser} />
-            {
-              this.props.loading
-                ? null
-                : <div>
-                  <Route path='/' exact component={Dashboard} />
-                  <Route path='/tweet/:id' component={TweetPage} />
-                  <Route path='/new' component={NewTweet} />
-                </div>
-            }
+  return (
+    <Router>
+      <Fragment>
+        <LoadingBar />
+        {authedUser === null && <Redirect to='/login' />}
+        <div className='container'>
+          <Nav
+            loggedInUser={authedUser}
+            handleLogoutUser={handleLogoutUser}
+          />
+          <div>
+            <Route path='/' exact component={Dashboard} />
+            <Route path='/tweet/:id' component={TweetPage} />
+            <Route path='/new' component={NewTweet} />
+            <Route path='/login' component={Login} />
           </div>
-        </Fragment>
-      </Router>
-    )
-  }
+        </div>
+      </Fragment>
+    </Router>
+  )
 }
 
-function mapsStateToProps({ authedUser }) {
+const mapsStateToProps = ({ authedUser, users }) => {
   return {
-    loading: authedUser === null,
-    authedUser
+    authedUser,
+    users
   }
 }
 

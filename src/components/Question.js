@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Avatar, Card, CardContent, CardHeader, Grid } from '@material-ui/core';
+import { Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 
 
-const Question = ({ question, user}) => {
+const Question = ({ question, user }) => {
 
     console.log('[QUESTION]: ', question);
-    console.log('[USER]: ', user);
 
     if (question === null) {
         return <p>This Tweet doesn't exists</p>
@@ -18,44 +17,45 @@ const Question = ({ question, user}) => {
         avatarURL,
     } = user;
 
-    console.log('[USER]: ', user);
-
     return (
-        <>
-            <Link to={`/question/${id}`}>
-                <Card>
-                    <CardHeader
-                        title={`${name} asks:`}
-                    />
+        <Card style={{ maxWidth: 400 }}>
 
-                    <CardContent>
-                        <Grid container direction="row">
+            <CardHeader
+                titleTypographyProps={{
+                    style: {
+                        fontSize: 18,
+                        fontWeight: 'bold'
+                    }
+                }}
+                style={{
+                    backgroundColor: 'lightgray',
+                }}
+                title={`${name} asks:`}
+            ></CardHeader>
+
+            <CardContent>
+                <Grid container direction="row" spacing={4} alignItems="center">
+                    <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
+                        <Avatar style={{ width: '100%', height: '100%' }} src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
+                    </Grid>
+                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
+                        <Grid container direction="column" spacing={2}>
                             <Grid item>
-                                <Avatar src={avatarURL} alt={`Avatar of ${name}`} className="avatar" />
+                                <Typography style={{ fontSize: 16, fontWeight: 'bold' }}>Would you rather</Typography>
                             </Grid>
                             <Grid item>
-                                <Grid container direction="column">
-                                    <Grid item>
-
-                                    </Grid>
-                                    <Grid item>
-
-                                    </Grid>
-                                    <Grid item>
-
-                                    </Grid>
-                                </Grid>
-                                <div className="tweet-info">
-                                    <div>
-                                        <span>{name}</span>
-                                    </div>
-                                </div>
+                                <Typography>...{question.optionOne.text}...</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Link to={`/question/${id}`}>
+                                    <Button variant="outlined" fullWidth style={{ borderColor: '#1EA1A1', color: '#1EA1A1' }}>View Poll</Button>
+                                </Link>
                             </Grid>
                         </Grid>
-                    </CardContent>
-                </Card>
-            </Link>
-        </>
+                    </Grid>
+                </Grid>
+            </CardContent>
+        </Card >
     )
 }
 

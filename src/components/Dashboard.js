@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Question from './Question';
-import { AppBar, Tab, Tabs, Typography } from '@material-ui/core';
+import { Tab, Tabs, Grid } from '@material-ui/core';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -13,58 +13,68 @@ const TabPanel = ({ children, value, index }) => {
     );
 }
 
-const Dashboard = ({ questions, users }) => {
+const Dashboard = ({ questions, users, authedUser }) => {
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
-    console.log('[QUESTIONS]: ', questions);
-    console.log('[USERS]: ', users);
-
     return (
-        <div>
-            <h3 className="center">Your Timeline</h3>
-
-            <AppBar position="static">
+        <Grid container direction="column" alignItems="center" alignContent="center" >
+            <Grid item>
+                <h3>Your Timeline</h3>
+            </Grid>
+            <Grid item>
                 <Tabs
                     value={value}
                     onChange={handleChange}
                     centered
+                    TabIndicatorProps={{
+                        style: {
+                            backgroundColor: '#1EA1A1'
+                        }
+                    }}
                 >
                     <Tab label="Unanswered Questions" />
                     <Tab label="Answered Questions" />
                 </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-                <Typography>UNANSWERED</Typography>
-                {
-                    questions && Object.values(questions).map((question, index) => (
-                        <li key={index}>
-                            <Question question={question} user={users[question.author]} />
-                        </li>
-                    ))
-                }
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                <Typography>ANSWERED</Typography>
-                {
-                    questions && Object.values(questions).map((question, index) => (
-                        <li key={index}>
-                            <Question question={question} user={users[question.author]} />
-                        </li>
-                    ))
-                }
-            </TabPanel>
-        </div>
+                <TabPanel value={value} index={0}>
+                    <Grid container direction="column" spacing={4}>
+                        {
+                            questions && authedUser && Object.values(questions).map((question, index) => {
+                                if (!question.optionOne.votes.includes(authedUser.id) && !question.optionTwo.votes.includes(authedUser.id)) {
+                                    return <Grid item key={index}>
+                                        <Question question={question} user={users[question.author]} />
+                                    </Grid>
+                                }
+                            })
+                        }
+                    </Grid>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <Grid container direction="column" spacing={4}>
+                        {
+                            questions && authedUser && Object.values(questions).map((question, index) => {
+                                if (question.optionOne.votes.includes(authedUser.id) || question.optionTwo.votes.includes(authedUser.id)) {
+                                    return <Grid item key={index}>
+                                        <Question question={question} user={users[question.author]} />
+                                    </Grid>
+                                }
+                            })
+                        }
+                    </Grid>
+                </TabPanel>
+            </Grid>
+        </Grid>
     )
 }
 
-function mapsStateToProps({ questions, users }) {
+const mapsStateToProps = ({ questions, users, authedUser }) => {
     return {
-        questions: questions,
-        users: users
+        questions,
+        users,
+        authedUser
     }
 }
 
