@@ -1,17 +1,25 @@
 import { CardContent, Typography, Grid, Select, Card, CardHeader, MenuItem, Avatar } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
+import { handleInitialData } from '../actions/shared';
 
-const Login = ({ users, dispatch, history }) => {
+const Login = ({ users, dispatch, history, authedUser }) => {
+
+    useEffect(() => {
+        dispatch(handleInitialData());
+    }, []);
+
+    if (authedUser !== null) {
+        return <Redirect to='/' />
+    }
 
     const handleChange = (event) => {
-        console.log('[SELECTED ID]: ', event.target.value);
         dispatch(setAuthedUser(users[event.target.value]));
+        localStorage.setItem('user', JSON.stringify(users[event.target.value]));
         history.push('/');
     };
-
-    console.log('[USERS]: ', Object.values(users));
 
     return (
         <Grid container justifyContent="center">
@@ -60,9 +68,10 @@ const Login = ({ users, dispatch, history }) => {
     )
 }
 
-const mapsStateToProps = ({ users }) => {
+const mapsStateToProps = ({ users, authedUser }) => {
     return {
-        users
+        users,
+        authedUser
     }
 }
 

@@ -47,6 +47,8 @@ const Dashboard = ({ questions, users, authedUser }) => {
                                     return <Grid item key={index}>
                                         <Question question={question} user={users[question.author]} />
                                     </Grid>
+                                } else {
+                                    return null;
                                 }
                             })
                         }
@@ -60,6 +62,8 @@ const Dashboard = ({ questions, users, authedUser }) => {
                                     return <Grid item key={index}>
                                         <Question question={question} user={users[question.author]} />
                                     </Grid>
+                                } else {
+                                    return null;
                                 }
                             })
                         }

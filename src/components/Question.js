@@ -47,15 +47,15 @@ const Question = ({ question, user }) => {
                                 <Typography>...{question.optionOne.text}...</Typography>
                             </Grid>
                             <Grid item>
-                                <Link to={`/question/${id}`}>
-                                    <Button variant="outlined" fullWidth style={{ borderColor: '#1EA1A1', color: '#1EA1A1' }}>View Poll</Button>
+                                <Link to={`/question/${id}/${question.id}`}>
+                                    <Button variant="contained" fullWidth style={{ backgroundColor: '#1EA1A1', color: 'white' }}>View Poll</Button>
                                 </Link>
                             </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
             </CardContent>
-        </Card >
+        </Card>
     )
 }
 

@@ -9,6 +9,7 @@ import TweetPage from './TweetPage';
 import Nav from './Nav';
 import Login from './Login';
 import { logoutUser } from '../actions/authedUser';
+import Answer from './Answer';
 
 const App = ({ authedUser, dispatch }) => {
 
@@ -18,23 +19,25 @@ const App = ({ authedUser, dispatch }) => {
 
   const handleLogoutUser = () => {
     dispatch(logoutUser());
+    localStorage.removeItem('user');
   }
 
   return (
     <Router>
       <Fragment>
         <LoadingBar />
-        {authedUser === null && <Redirect to='/login' />}
+        {(authedUser === null) && <Redirect to='/login' />}
+        <Nav
+          loggedInUser={authedUser}
+          handleLogoutUser={handleLogoutUser}
+        />
         <div className='container'>
-          <Nav
-            loggedInUser={authedUser}
-            handleLogoutUser={handleLogoutUser}
-          />
           <div>
             <Route path='/' exact component={Dashboard} />
             <Route path='/tweet/:id' component={TweetPage} />
             <Route path='/new' component={NewTweet} />
             <Route path='/login' component={Login} />
+            <Route path='/question/:userId/:questionId' component={Answer} />
           </div>
         </div>
       </Fragment>

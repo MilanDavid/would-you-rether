@@ -11,11 +11,22 @@ export function handleInitialData() {
         dispatch(showLoading());
 
         return getInitialData()
-        .then(({ users, questions}) => {
-            dispatch(receiveUsers(users));
-            dispatch(receiveQuestions(questions));
-            if(AUTHED_ID) dispatch(setAuthedUser(users[AUTHED_ID]));
-            dispatch(hideLoading());
-        })
+            .then(({ users, questions }) => {
+                dispatch(receiveUsers(users));
+                dispatch(receiveQuestions(questions));
+                if (AUTHED_ID) {
+                    dispatch(setAuthedUser(users[AUTHED_ID]))
+                } else if(localStorage.getItem('user')) {
+                    dispatch(setAuthedUser(JSON.parse(localStorage.getItem('user'))));
+                };
+                dispatch(hideLoading());
+            })
+    }
+}
+
+export function updateAuthedUser(user) {
+    return (dispatch) => {
+        dispatch(setAuthedUser(user));
+        localStorage.setItem('user', JSON.stringify(user));
     }
 }
