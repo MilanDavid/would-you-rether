@@ -1,9 +1,23 @@
 import React from 'react';
-import { Avatar, Button, Container, Grid } from '@material-ui/core';
+import { Avatar, Button, Container, Grid, makeStyles } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+const useStyles = makeStyles({
+    active: {
+        fontWeight: 'bold',
+        color: '#1EA1A1'
+    },
+    navItem: {
+        '&:hover': {
+            fontWeight: 'bold'
+        }
+    }
+});
+
 const Nav = ({ loggedInUser, handleLogoutUser }) => {
+
+    const classes = useStyles();
 
     return (
         <nav className='nav' style={{ borderBottom: '2px solid green', padding: 10 }}>
@@ -12,17 +26,17 @@ const Nav = ({ loggedInUser, handleLogoutUser }) => {
                     <Grid item xs sm md lg xl>
                         <Grid container direction="row" style={{ height: 72 }} alignItems="center" spacing={4}>
                             <Grid item>
-                                <NavLink to='/' exact activeClassName="active">
+                                <NavLink to='/' exact className={isActive => isActive ? classes.active : classes.navItem}>
                                     Home
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                                <NavLink to='/new' exact activeClassName="active">
+                                <NavLink to='/add' exact className={isActive => isActive ? classes.active : classes.navItem}>
                                     New Question
                                 </NavLink>
                             </Grid>
                             <Grid item>
-                                <NavLink to='/leaderboard' exact activeClassName="active">
+                                <NavLink to='/leaderboard' exact className={isActive => isActive ? classes.active : classes.navItem}>
                                     Leader Board
                                 </NavLink>
                             </Grid>
@@ -48,7 +62,7 @@ const Nav = ({ loggedInUser, handleLogoutUser }) => {
                         <Grid item xs sm md lg xl>
                             <Grid container style={{ height: 72 }} direction="row" justifyContent="flex-end" alignItems="center" spacing={4}>
                                 <Grid item>
-                                    <NavLink to="/login" activeClassName="active">
+                                    <NavLink to="/login">
                                         Login
                                     </NavLink>
                                 </Grid>

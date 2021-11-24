@@ -5,8 +5,6 @@ import { Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from 
 
 const Question = ({ question, user }) => {
 
-    console.log('[QUESTION]: ', question);
-
     if (question === null) {
         return <p>This Tweet doesn't exists</p>
     }
@@ -47,7 +45,7 @@ const Question = ({ question, user }) => {
                                 <Typography>...{question.optionOne.text}...</Typography>
                             </Grid>
                             <Grid item>
-                                <Link to={`/question/${id}/${question.id}`}>
+                                <Link to={`/questions/${id}/${question.id}`}>
                                     <Button variant="contained" fullWidth style={{ backgroundColor: '#1EA1A1', color: 'white' }}>View Poll</Button>
                                 </Link>
                             </Grid>

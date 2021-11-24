@@ -16,10 +16,10 @@ const Results = ({ question, user }) => {
                 <Typography style={{ fontSize: 24, fontWeight: 'bold' }}>Results:</Typography>
             </Grid>
             < Grid item>
-                <Card style={{ minWidth: 400, marginTop: 20, backgroundColor: '#f3f3f3', border: '2px solid gray', overflow: 'inherit', position: 'relative' }}>
+                <Card style={{ minWidth: 400, marginTop: 20, backgroundColor: question.optionOne.votes.includes(user.id) ? 'rgb(30 161 161 / 21%)' : '#f3f3f3', border: question.optionOne.votes.includes(user.id) ? '2px solid #1EA1A1' : '2px solid gray', overflow: 'inherit', position: 'relative' }}>
                     {
                         question.optionOne.votes.includes(user.id) &&
-                        <div style={{ position: 'absolute', right: -10, top: -20, backgroundColor: '#e3e320', borderRadius: '50%', padding: 10, fontWeight: 'bold', color: 'white', transform: 'rotate(15deg)' }}>
+                        <div style={{ position: 'absolute', right: -10, top: -20, backgroundColor: 'rgb(227 131 32)', borderRadius: '50%', padding: 10, fontWeight: 'bold', color: 'white', transform: 'rotate(15deg)' }}>
                             Your<br />Vote
                         </div>
                     }
@@ -42,10 +42,10 @@ const Results = ({ question, user }) => {
                 </Card>
             </Grid>
             < Grid item>
-                <Card style={{ minWidth: 400, marginTop: 20, backgroundColor: '#f3f3f3', border: '2px solid gray', overflow: 'inherit', position: 'relative' }}>
+                <Card style={{ minWidth: 400, marginTop: 20, backgroundColor: question.optionTwo.votes.includes(user.id) ? 'rgb(30 161 161 / 21%)' : '#f3f3f3', border: question.optionTwo.votes.includes(user.id) ? '2px solid #1EA1A1' : '2px solid gray', overflow: 'inherit', position: 'relative' }}>
                     {
                         question.optionTwo.votes.includes(user.id) &&
-                        <div style={{ position: 'absolute', right: -10, top: -20, backgroundColor: '#e3e320', borderRadius: '50%', padding: 10, fontWeight: 'bold', color: 'white', transform: 'rotate(15deg)' }}>
+                        <div style={{ position: 'absolute', right: -10, top: -20, backgroundColor: 'rgb(227 131 32)', borderRadius: '50%', padding: 10, fontWeight: 'bold', color: 'white', transform: 'rotate(15deg)' }}>
                             Your<br />Vote
                         </div>
                     }

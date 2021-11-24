@@ -20,6 +20,8 @@ const Dashboard = ({ questions, users, authedUser }) => {
         setValue(newValue);
     };
 
+    console.log('[QUESTIONS]: ', questions);
+
     return (
         <Grid container direction="column" alignItems="center" alignContent="center" >
             <Grid item>

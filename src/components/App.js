@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import Dashboard from './Dashboard';
 import LoadingBar from 'react-redux-loading';
-import NewTweet from './NewTweet';
-import TweetPage from './TweetPage';
 import Nav from './Nav';
 import Login from './Login';
 import { logoutUser } from '../actions/authedUser';
 import Answer from './Answer';
+import Ladder from './Ladder';
+import NewQuestion from './NewQuestion';
 
 const App = ({ authedUser, dispatch }) => {
 
@@ -34,10 +34,10 @@ const App = ({ authedUser, dispatch }) => {
         <div className='container'>
           <div>
             <Route path='/' exact component={Dashboard} />
-            <Route path='/tweet/:id' component={TweetPage} />
-            <Route path='/new' component={NewTweet} />
+            <Route path='/add' component={NewQuestion} />
             <Route path='/login' component={Login} />
-            <Route path='/question/:userId/:questionId' component={Answer} />
+            <Route path='/questions/:userId/:questionId' component={Answer} />
+            <Route path='/leaderboard' component={Ladder} />
           </div>
         </div>
       </Fragment>
