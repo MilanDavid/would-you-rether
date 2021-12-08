@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Question from './Question';
 import { Tab, Tabs, Grid } from '@material-ui/core';
+import Question from './Question';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -19,8 +19,6 @@ const Dashboard = ({ questions, users, authedUser }) => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    console.log('[QUESTIONS]: ', questions);
 
     return (
         <Grid container direction="column" alignItems="center" alignContent="center" >

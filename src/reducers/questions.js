@@ -2,7 +2,6 @@ import { RECEIVE_QEUSTIONS, TOGGLE_TWEET, ADD_TWEET } from '../actions/tweets';
 import { ANSWER_QUESTION } from '../actions/answer';
 
 export default function questions(state = {}, action) {
-    console.log('[ACTION]: ', action);
 
     switch (action.type) {
         case RECEIVE_QEUSTIONS:

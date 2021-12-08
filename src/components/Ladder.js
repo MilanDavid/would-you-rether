@@ -6,14 +6,10 @@ import { connect } from 'react-redux';
 
 const Ladder = ({ users }) => {
 
-    console.log('[USERS]: ', users);
-
     return (
         <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>
             {
                 users && Object.keys(users).sort((first, second) => {
-                    console.log('[FIRST]: ', users[first]);
-                    console.log('[SECOND]: ', users[second]);
                     return (Object.keys(users[second].answers).length + users[second].questions.length) - (Object.keys(users[first].answers).length + users[first].questions.length)
                 }).map((user, index) => (
                     <Grid item key={index}>

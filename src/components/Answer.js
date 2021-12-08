@@ -3,8 +3,8 @@ import { withRouter, useParams } from 'react-router-dom';
 import { Card, CardContent, Grid, Typography, Button, FormControlLabel, Radio, RadioGroup, CardHeader, Avatar, FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { handleAnswer } from '../actions/answer';
-import Results from './Results';
 import { updateAuthedUser } from '../actions/shared';
+import Results from './Results';
 
 
 const Answer = ({ questions, users, authedUser, dispatch }) => {

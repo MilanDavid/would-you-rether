@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Button, Card, CardContent, CardHeader, Grid, TextField, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { saveQuestion } from '../utils/api';
+import { getInitialData, saveQuestion } from '../utils/api';
+import { receiveQuestions } from '../actions/tweets';
+import { hideLoading, showLoading } from 'react-redux-loading';
 
-const NewQuestion = ({ authedUser }) => {
+const NewQuestion = ({ authedUser, dispatch }) => {
 
     const history = useHistory();
     const [questions, setQuestions] = useState({
@@ -22,14 +24,27 @@ const NewQuestion = ({ authedUser }) => {
     }
 
     const handleSubmit = () => {
+        dispatch(showLoading());
         saveQuestion({
             author: authedUser.id,
             optionOneText: questions.optionOne,
             optionTwoText: questions.optionTwo
-        }).then(res => {
-            console.log('[SAVE QUESTION RES]: ', res);
-            history.push('/')
         })
+            .then(res => {
+                getInitialData()
+                    .then(({ questions }) => {
+                        dispatch(receiveQuestions(questions));
+                        history.push('/')
+                        dispatch(hideLoading());
+                    })
+                    .catch(err => {
+                        dispatch(hideLoading());
+                    })
+            })
+            .catch(err => {
+                dispatch(hideLoading());
+            })
+
     }
 
     return (

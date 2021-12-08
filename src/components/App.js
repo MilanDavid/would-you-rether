@@ -2,11 +2,11 @@ import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
+import { logoutUser } from '../actions/authedUser';
 import Dashboard from './Dashboard';
 import LoadingBar from 'react-redux-loading';
 import Nav from './Nav';
 import Login from './Login';
-import { logoutUser } from '../actions/authedUser';
 import Answer from './Answer';
 import Ladder from './Ladder';
 import NewQuestion from './NewQuestion';

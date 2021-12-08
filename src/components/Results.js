@@ -4,10 +4,6 @@ import { Card, CardContent, Grid, Typography, LinearProgress } from '@material-u
 
 
 const Results = ({ question, user }) => {
-    console.log('[Q]: ', question);
-    console.log('[USER]: ', user);
-    console.log('[ONE]: ', ((question.optionOne.votes.length + question.optionTwo.votes.length)) * 100);
-    console.log('[TWO]: ', ((question.optionOne.votes.length + question.optionTwo.votes.length) / question.optionTwo.votes.length) * 100 === Infinity);
 
     return (
         question &&

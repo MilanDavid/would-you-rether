@@ -1,5 +1,5 @@
-import { CardContent, Typography, Grid, Select, Card, CardHeader, MenuItem, Avatar } from '@material-ui/core';
 import React, { useEffect } from 'react';
+import { CardContent, Typography, Grid, Select, Card, CardHeader, MenuItem, Avatar } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
