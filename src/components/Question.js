@@ -10,7 +10,6 @@ const Question = ({ question, user }) => {
     }
 
     const {
-        id,
         name,
         avatarURL,
     } = user;
@@ -45,7 +44,7 @@ const Question = ({ question, user }) => {
                                 <Typography>...{question.optionOne.text}...</Typography>
                             </Grid>
                             <Grid item>
-                                <Link to={`/questions/${id}/${question.id}`}>
+                                <Link to={`/questions/${question.id}`}>
                                     <Button variant="contained" fullWidth style={{ backgroundColor: '#1EA1A1', color: 'white' }}>View Poll</Button>
                                 </Link>
                             </Grid>

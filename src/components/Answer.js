@@ -13,7 +13,7 @@ const Answer = ({ questions, users, authedUser, dispatch }) => {
         if(authedUser) {
             dispatch(updateAuthedUser(users[authedUser.id]));
         }
-    }, [users, authedUser])
+    }, [users, authedUser, dispatch])
 
     const params = useParams();
     const [value, setValue] = useState(null);
@@ -40,12 +40,12 @@ const Answer = ({ questions, users, authedUser, dispatch }) => {
                         style={{
                             backgroundColor: 'lightgray',
                         }}
-                        title={`${users[params?.userId]?.name} asks:`}
+                        title={`${users[questions[params?.questionId]?.author]?.name} asks:`}
                     ></CardHeader>
                     <CardContent>
                         <Grid container direction="row" spacing={4} alignItems="center">
                             <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>
-                                <Avatar style={{ width: 150, height: 150 }} src={users[params?.userId]?.avatarURL} alt={`Avatar of ${users[params?.userId]?.name}`} className="avatar" />
+                                <Avatar style={{ width: 150, height: 150 }} src={users[questions[params?.questionId]?.author]?.avatarURL} alt={`Avatar of ${users[questions[params?.questionId]?.author]?.name}`} className="avatar" />
                             </Grid>
                             <Grid item xs={8} sm={8} md={8} lg={8} xl={8}>
                                 <Grid container direction="column" style={{ padding: 20 }}>

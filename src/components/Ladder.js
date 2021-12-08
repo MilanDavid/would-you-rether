@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Avatar, Button, Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { Avatar, Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 

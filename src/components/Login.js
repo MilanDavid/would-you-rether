@@ -9,7 +9,7 @@ const Login = ({ users, dispatch, history, authedUser }) => {
 
     useEffect(() => {
         dispatch(handleInitialData());
-    }, []);
+    }, [dispatch]);
 
     if (authedUser !== null) {
         return <Redirect to='/' />

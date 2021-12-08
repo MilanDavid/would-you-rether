@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import { logoutUser } from '../actions/authedUser';
@@ -10,12 +10,13 @@ import Login from './Login';
 import Answer from './Answer';
 import Ladder from './Ladder';
 import NewQuestion from './NewQuestion';
+import PageNotFound from './PageNotFound';
 
 const App = ({ authedUser, dispatch }) => {
 
   useEffect(() => {
     dispatch(handleInitialData());
-  }, []);
+  }, [dispatch]);
 
   const handleLogoutUser = () => {
     dispatch(logoutUser());
@@ -26,18 +27,20 @@ const App = ({ authedUser, dispatch }) => {
     <Router>
       <Fragment>
         <LoadingBar />
-        {(authedUser === null) && <Redirect to='/login' />}
         <Nav
           loggedInUser={authedUser}
           handleLogoutUser={handleLogoutUser}
         />
         <div className='container'>
           <div>
-            <Route path='/' exact component={Dashboard} />
-            <Route path='/add' component={NewQuestion} />
-            <Route path='/login' component={Login} />
-            <Route path='/questions/:userId/:questionId' component={Answer} />
-            <Route path='/leaderboard' component={Ladder} />
+            <Switch>
+              <Route exact path='/' component={Dashboard} />
+              <Route path='/add' component={NewQuestion} />
+              <Route path='/login' component={Login} />
+              <Route path='/questions/:questionId' component={Answer} />
+              <Route path='/leaderboard' component={Ladder} />
+              <Route path="*" component={PageNotFound} />
+            </Switch>
           </div>
         </div>
       </Fragment>
