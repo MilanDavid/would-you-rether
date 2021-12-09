@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Tab, Tabs, Grid } from '@material-ui/core';
 import Question from './Question';
+import { Redirect, useHistory } from 'react-router-dom';
 
 const TabPanel = ({ children, value, index }) => {
     return (
@@ -15,10 +16,18 @@ const TabPanel = ({ children, value, index }) => {
 
 const Dashboard = ({ questions, users, authedUser }) => {
     const [value, setValue] = useState(0);
+    const history = useHistory();
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    if (authedUser === null) {
+        return <Redirect to={{
+            pathname: "/login",
+            state: { from: history.location }
+        }} />
+    }
 
     return (
         <Grid container direction="column" alignItems="center" alignContent="center" >
@@ -42,30 +51,42 @@ const Dashboard = ({ questions, users, authedUser }) => {
                 <TabPanel value={value} index={0}>
                     <Grid container direction="column" spacing={4}>
                         {
-                            questions && authedUser && Object.values(questions).map((question, index) => {
-                                if (!question.optionOne.votes.includes(authedUser.id) && !question.optionTwo.votes.includes(authedUser.id)) {
-                                    return <Grid item key={index}>
-                                        <Question question={question} user={users[question.author]} />
-                                    </Grid>
-                                } else {
-                                    return null;
-                                }
-                            })
+                            questions
+                            && authedUser
+                            && Object.values(questions)
+                                .sort((first, second) => {
+                                    return (second.timestamp - first.timestamp)
+                                })
+                                .map((question, index) => {
+                                    if (!question.optionOne.votes.includes(authedUser.id) && !question.optionTwo.votes.includes(authedUser.id)) {
+                                        return <Grid item key={index}>
+                                            <Question question={question} user={users[question.author]} />
+                                        </Grid>
+                                    } else {
+                                        return null;
+                                    }
+                                })
                         }
                     </Grid>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <Grid container direction="column" spacing={4}>
                         {
-                            questions && authedUser && Object.values(questions).map((question, index) => {
-                                if (question.optionOne.votes.includes(authedUser.id) || question.optionTwo.votes.includes(authedUser.id)) {
-                                    return <Grid item key={index}>
-                                        <Question question={question} user={users[question.author]} />
-                                    </Grid>
-                                } else {
-                                    return null;
-                                }
-                            })
+                            questions
+                            && authedUser
+                            && Object.values(questions)
+                                .sort((first, second) => {
+                                    return (second.timestamp - first.timestamp)
+                                })
+                                .map((question, index) => {
+                                    if (question.optionOne.votes.includes(authedUser.id) || question.optionTwo.votes.includes(authedUser.id)) {
+                                        return <Grid item key={index}>
+                                            <Question question={question} user={users[question.author]} />
+                                        </Grid>
+                                    } else {
+                                        return null;
+                                    }
+                                })
                         }
                     </Grid>
                 </TabPanel>

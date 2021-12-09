@@ -1,10 +1,18 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter, useHistory } from 'react-router-dom';
 import { Avatar, Card, CardContent, CardHeader, Grid, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 
 
-const Ladder = ({ users }) => {
+const Ladder = ({ users, authedUser }) => {
+    const history = useHistory();
+
+    if (authedUser === null) {
+        return <Redirect to={{
+            pathname: "/login",
+            state: { from: history.location }
+        }} />
+    }
 
     return (
         <Grid container direction="column" alignItems="center" justifyContent="center" spacing={2}>

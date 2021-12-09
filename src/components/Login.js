@@ -1,25 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardContent, Typography, Grid, Select, Card, CardHeader, MenuItem, Avatar } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAuthedUser } from '../actions/authedUser';
 import { handleInitialData } from '../actions/shared';
+import { useLocation } from 'react-router-dom';
 
-const Login = ({ users, dispatch, history, authedUser }) => {
+const Login = ({ users, dispatch }) => {
+
+    const [redirectToReferrer, setRedirectToReferrer] = useState(false);
+    const { state } = useLocation();
 
     useEffect(() => {
         dispatch(handleInitialData());
     }, [dispatch]);
 
-    if (authedUser !== null) {
-        return <Redirect to='/' />
-    }
 
     const handleChange = (event) => {
         dispatch(setAuthedUser(users[event.target.value]));
         localStorage.setItem('user', JSON.stringify(users[event.target.value]));
-        history.push('/');
+        setRedirectToReferrer(true)
     };
+
+    if (redirectToReferrer) {
+        return <Redirect to={state?.from || '/'} />
+    }
 
     return (
         <Grid container justifyContent="center">

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Card, CardContent, CardHeader, Grid, TextField, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { getInitialData, saveQuestion } from '../utils/api';
 import { receiveQuestions } from '../actions/tweets';
 import { hideLoading, showLoading } from 'react-redux-loading';
@@ -44,7 +44,13 @@ const NewQuestion = ({ authedUser, dispatch }) => {
             .catch(err => {
                 dispatch(hideLoading());
             })
+    }
 
+    if (authedUser === null) {
+        return <Redirect to={{
+            pathname: "/login",
+            state: { from: history.location }
+        }} />
     }
 
     return (

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { withRouter, useParams } from 'react-router-dom';
+import { withRouter, useParams, Redirect, useHistory } from 'react-router-dom';
 import { Card, CardContent, Grid, Typography, Button, FormControlLabel, Radio, RadioGroup, CardHeader, Avatar, FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { handleAnswer } from '../actions/answer';
@@ -10,11 +10,12 @@ import Results from './Results';
 const Answer = ({ questions, users, authedUser, dispatch }) => {
 
     useEffect(() => {
-        if(authedUser) {
+        if (authedUser) {
             dispatch(updateAuthedUser(users[authedUser.id]));
         }
     }, [users, authedUser, dispatch])
 
+    const history = useHistory();
     const params = useParams();
     const [value, setValue] = useState(null);
 
@@ -25,6 +26,13 @@ const Answer = ({ questions, users, authedUser, dispatch }) => {
     const handleSubmit = () => {
         dispatch(handleAnswer(params?.questionId, authedUser.id, value));
     };
+
+    if (authedUser === null) {
+        return <Redirect to={{
+            pathname: "/login",
+            state: { from: history.location }
+        }} />
+    }
 
     return (
         <Grid container direction="column" alignItems="center" alignContent="center" >
