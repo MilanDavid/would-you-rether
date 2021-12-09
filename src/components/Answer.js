@@ -26,6 +26,8 @@ const Answer = ({ questions, users, authedUser, dispatch }) => {
     const handleSubmit = () => {
         dispatch(handleAnswer(params?.questionId, authedUser.id, value));
     };
+    
+    if(!questions[params?.questionId]) return <Redirect to='/404'/>
 
     if (authedUser === null) {
         return <Redirect to={{

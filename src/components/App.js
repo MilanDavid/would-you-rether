@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { handleInitialData } from '../actions/shared';
 import { logoutUser } from '../actions/authedUser';
